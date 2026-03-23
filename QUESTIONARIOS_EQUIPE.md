@@ -18,7 +18,7 @@ Garantir que todos do grupo tenham 100% de noção do projeto, não apenas do pr
 ---
 
 ## Questionário 1 - Dário (Grid)
-Responsável por: grid.h e grid.cpp
+Responsável por: grid.hpp e grid.cpp
 
 ### A. Estrutura e memória
 1. Como a estrutura Grid foi desenhada e por que os campos n, L e cells são suficientes?
@@ -47,7 +47,7 @@ Responsável por: grid.h e grid.cpp
 ---
 
 ## Questionário 2 - Bernardo (Rules)
-Responsável por: rules.h e rules.cpp
+Responsável por: rules.hpp e rules.cpp
 
 ### A. Lógica de validação
 1. O que significa exatamente is_valid(g, row, col, num)?
@@ -77,7 +77,7 @@ Responsável por: rules.h e rules.cpp
 ---
 
 ## Questionário 3 - William (Solver)
-Responsável por: solver.h e solver.cpp
+Responsável por: solver.hpp e solver.cpp
 
 ### A. Estratégia de resolução
 1. Explica o algoritmo de backtracking usado no solve.

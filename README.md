@@ -5,13 +5,13 @@ Construir um resolvedor de Sudoku modular, com 3 módulos independentes (Grid, R
 
 ## Arquitetura
 - Entrada e integração: [main.cpp](main.cpp)
-- Módulo de tabuleiro: [grid.h](grid.h) e [grid.cpp](grid.cpp)
-- Módulo de validação: [rules.h](rules.h) e [rules.cpp](rules.cpp)
-- Módulo de resolução: [solver.h](solver.h) e [solver.cpp](solver.cpp)
+- Módulo de tabuleiro: [grid.hpp](grid.hpp) e [grid.cpp](grid.cpp)
+- Módulo de validação: [rules.hpp](rules.hpp) e [rules.cpp](rules.cpp)
+- Módulo de resolução: [solver.hpp](solver.hpp) e [solver.cpp](solver.cpp)
 
 ## Princípio principal
 Trabalhar por contrato.
-Cada módulo expõe assinaturas estáveis no .h, e a implementação no .cpp pode evoluir sem quebrar os outros.
+Cada módulo expõe assinaturas estáveis no .hpp, e a implementação no .cpp pode evoluir sem quebrar os outros.
 
 ## Contratos fixos
 
@@ -46,7 +46,7 @@ Checklist:
 - [ ] Implementar print_grid legível para debug
 
 Entregável:
-- [grid.cpp](grid.cpp) funcional, mantendo o contrato de [grid.h](grid.h)
+- [grid.cpp](grid.cpp) funcional, mantendo o contrato de [grid.hpp](grid.hpp)
 
 ### Bernardo (Rules)
 Responsável pelas regras do Sudoku.
@@ -59,7 +59,7 @@ Checklist:
 - [ ] Garantir que valores fora do intervalo são rejeitados
 
 Entregável:
-- [rules.cpp](rules.cpp) funcional, mantendo o contrato de [rules.h](rules.h)
+- [rules.cpp](rules.cpp) funcional, mantendo o contrato de [rules.hpp](rules.hpp)
 
 ### William (Solver)
 Responsável pelo backtracking.
@@ -72,7 +72,7 @@ Checklist:
 - [ ] Retornar sucesso quando não houver células vazias
 
 Entregável:
-- [solver.cpp](solver.cpp) funcional, mantendo o contrato de [solver.h](solver.h)
+- [solver.cpp](solver.cpp) funcional, mantendo o contrato de [solver.hpp](solver.hpp)
 
 ### Integração final (grupo)
 Responsável por ligar tudo no fluxo principal.

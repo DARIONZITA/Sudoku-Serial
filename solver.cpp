@@ -1,6 +1,6 @@
-#include "solver.h"
+#include "solver.hpp"
 
-#include "rules.h"
+#include "rules.hpp"
 
 int solve(Grid *g) {
     int row, col;

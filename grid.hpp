@@ -1,6 +1,6 @@
 #ifndef GRID_H
 #define GRID_H
-
+#include <iostream>
 struct Grid {
     int n;      // tamanho do tabuleiro (ex.: 9)
     int L;      // tamanho do bloco (ex.: 3)
