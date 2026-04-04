@@ -1,6 +1,49 @@
 #include "grid.hpp"
+#include "rules.hpp"
 #include <fstream>
 #include <iostream>
+#include <omp.h>
+
+Grid *clone_grid(const Grid *original) {
+    if (!original) return nullptr;
+
+    Grid *novo = new Grid;
+    novo->n = original->n;
+    novo->L = original->L;
+    
+    int n = original->n;
+    novo->cells = new int*[n];
+
+    // Cópia profunda em paralelo garantindo tabuleiros privados para cada branch
+    #pragma omp parallel for
+    for (int i = 0; i < n; ++i) {
+        novo->cells[i] = new int[n];
+        for (int j = 0; j < n; ++j) {
+            novo->cells[i][j] = original->cells[i][j];
+        }
+    }
+
+    return novo;
+}
+
+int count_empty_cells(const Grid *g) {
+    if (!g) return 0;
+    
+    int zeros = 0;
+    int n = g->n;
+
+    // Cláusula reduction junta as somas parciais de forma thread-safe
+    #pragma omp parallel for collapse(2) reduction(+:zeros)
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (g->cells[i][j] == 0) {
+                zeros++;
+            }
+        }
+    }
+
+    return zeros;
+}
 
 Grid *load_grid(const char *filename) {
     // TODO(Dário): ler ficheiro, alocar memoria e preencher Grid.
@@ -21,7 +64,7 @@ Grid *load_grid(const char *filename) {
         for (int j = 0; j < n; ++j) {
             if (!(file >> cells[i][j])) {
                 std::cerr << "Error reading cell value at (" << i << ", " << j << ")" << std::endl;
-                 for (int k = 0; k <= i; ++k) {
+                for (int k = 0; k <= i; ++k) {
                     delete[] cells[k];
                 }
                 delete[] cells;
@@ -30,8 +73,33 @@ Grid *load_grid(const char *filename) {
         }
     }
     
-    Grid *g = new Grid{n, L, cells};
     
+    
+    Grid *g = new Grid{n, L, cells};
+
+
+bool abortar = false;
+
+#pragma omp parallel for collapse(2) shared(abortar)
+for(int i = 0; i < n; ++i) {
+    for(int j = 0; j < n; ++j) {
+        // Verifica se outra thread já sinalizou o erro
+        if (abortar) continue; 
+
+        if (cells[i][j] > 0 && !is_valid(g, i, j, cells[i][j])) {
+            abortar = true; // Não precisa de 'critical' se for apenas um booleano simples
+        }
+    }
+}
+
+    // O 'delete' deve ser feito APENAS FORA do bloco paralelo
+    if (abortar) {
+        std::cerr << "Não tem solução" << std::endl;
+        for (int k = 0; k < n; ++k) delete[] cells[k];
+        delete[] cells;
+        delete g;
+        return nullptr;
+    }
     return g;
 }
 

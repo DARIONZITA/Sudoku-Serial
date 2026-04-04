@@ -22,6 +22,7 @@ Responsável por: grid.hpp e grid.cpp
 
 ### A. Estrutura e memória
 1. Como a estrutura Grid foi desenhada e por que os campos n, L e cells são suficientes?
+    R: A estrutura foi desenhada para ser um matriz bidimencional na qual a alocacão será feita apenas uma vez, no inicio, **cells vai guardar a matriz e "n" é o limite sa matriz sendo uma matriz quadrada
 2. Como a memória de cells é alocada e libertada?
 3. Que estratégia foi usada para evitar memory leaks e double free?
 4. O que acontece se load_grid falhar a meio da leitura?

@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++17 -O2
+CXXFLAGS = -Wall -Wextra -std=c++17 -O2 -fopenmp
 
 TARGET = sudoku
 SRCS = main.cpp grid.cpp rules.cpp solver.cpp

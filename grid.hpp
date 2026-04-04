@@ -14,4 +14,8 @@ int get_cell(Grid *g, int row, int col);
 void set_cell(Grid *g, int row, int col, int value);
 void print_grid(Grid *g);
 
+// Novas funções OpenMP para clonar o tabuleiro e contar espaços vazios (Dário)
+Grid *clone_grid(const Grid *original);
+int count_empty_cells(const Grid *g);
+
 #endif

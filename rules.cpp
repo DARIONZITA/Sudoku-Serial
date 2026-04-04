@@ -3,16 +3,17 @@
 int is_valid(Grid *g, int row, int col, int num) {
     // TODO(Bernardo): criar check_row, check_col e check_block.
     // TODO(Bernardo): is_valid deve combinar as 3 validacoes.
-    if (!check_row(g, row, num)) {
-        return 0;
-    }
-    if (!check_col(g, col, num)) {
-        return 0;
-    }
-    if (!check_block(g, row, col, num)) {
-        return 0;
-    }
-    return 1;
+    // Temporarily clear the cell being validated so the checks don't
+    // detect the cell's own value as a duplicate (useful when validating
+    // an already-filled initial grid).
+    int orig = g->cells[row][col];
+    g->cells[row][col] = 0;
+    int ok = 1;
+    if (!check_row(g, row, num)) ok = 0;
+    if (!check_col(g, col, num)) ok = 0;
+    if (!check_block(g, row, col, num)) ok = 0;
+    g->cells[row][col] = orig;
+    return ok;
 }
 
 int check_row(Grid *g, int row, int num) {
